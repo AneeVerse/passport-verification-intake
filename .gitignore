@@ -92,3 +92,5 @@ next-env.d.ts
 
 # scratch files containing credentials
 scratch/
+
+.vercel
