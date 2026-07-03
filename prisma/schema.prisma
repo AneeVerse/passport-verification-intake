@@ -1,0 +1,169 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Role {
+  role_id          Int      @id @default(autoincrement())
+  role_name        String
+  role_added_on    String?
+  role_added_by    Int?
+  role_updated_on  String?
+  role_updated_by  Int?
+  role_status      Int      @default(1) @db.SmallInt
+  users            User[]
+
+  @@map("roles")
+}
+
+model Location {
+  location_id          Int           @id @default(autoincrement())
+  location_name        String
+  location_added_on    String?
+  location_added_by    Int?
+  location_updated_on  String?
+  location_updated_by  Int?
+  location_status      Int           @default(1) @db.SmallInt
+  applications         Application[]
+
+  @@map("locations")
+}
+
+model Document {
+  document_id          Int     @id @default(autoincrement())
+  document_category    Int
+  document_name        String
+  document_added_on    String?
+  document_added_by    Int?
+  document_updated_on  String?
+  document_updated_by  Int?
+  document_status      Int     @default(1) @db.SmallInt
+
+  @@map("documents")
+}
+
+model Settings {
+  settings_id            Int     @id @default(autoincrement())
+  settings_title         String?
+  settings_company       String?
+  settings_email         String?
+  settings_phone         String?
+  settings_address       String? @db.Text
+  settings_logo          String?
+  settings_favicon       String?
+  settings_cname         String?
+  settings_csymbol       String?
+  settings_mailer        String?
+  settings_host          String?
+  settings_port          Int?
+  settings_uname         String?
+  settings_pwd           String?
+  settings_encryption    String? @db.VarChar(50)
+  settings_faddress      String?
+  settings_fname         String?
+  settings_winstance_id  String?
+  settings_waccess_token String?
+  settings_added_on      String?
+  settings_added_by      Int?
+  settings_updated_on    String?
+  settings_updated_by    Int?
+  settings_status        Int     @default(1) @db.SmallInt
+
+  @@map("settings")
+}
+
+model User {
+  user_id          Int      @id @default(autoincrement())
+  user_role        Int
+  user_name        String
+  user_email       String   @unique
+  user_phone       String?
+  user_password    String
+  user_vpassword   String?
+  user_image       String?
+  user_added_on    String?
+  user_added_by    Int?
+  user_updated_on  String?
+  user_updated_by  Int?
+  user_status      Int      @default(1) @db.SmallInt
+  role             Role     @relation(fields: [user_role], references: [role_id], onDelete: Cascade)
+
+  @@map("users")
+}
+
+model Application {
+  application_id          Int      @id @default(autoincrement())
+  application_date        DateTime @db.Date
+  application_type        Int
+  application_mode        Int
+  application_srno        String?
+  application_name        String
+  application_surname     String
+  application_email       String?
+  application_gender      Int
+  application_mobile      String   @db.VarChar(50)
+  application_office      Int
+  application_dob         DateTime @db.Date
+  application_age         Int
+  application_nstatus     Int?
+  application_nproof      String?  @default("0")
+  application_nother      String?  @default("")
+  application_mnproof     String?  @default("0")
+  application_mnother     String?  @default("")
+  application_fnproof     String?  @default("0")
+  application_fnother     String?  @default("")
+  application_aproof      String
+  application_aother      String?  @default("")
+  application_dproof      String
+  application_dother      String?  @default("")
+  application_mstatus     String   @db.VarChar(50)
+  application_mproof      String?  @default("0")
+  application_nmismatch   Int
+  application_nfound      String?  @default("0")
+  application_nfother     String?  @default("")
+  application_nnotes      String?  @db.Text
+  application_ncorrect    Int?     @default(0)
+  application_addocuments String
+  application_adother     String?  @default("")
+  application_ecnr        Int
+  application_ecother     String?  @default("")
+  application_bdate       DateTime @db.Date
+  application_notes       String?  @db.Text
+  application_added_on    String?
+  application_added_by    Int?
+  application_updated_on  String?
+  application_updated_by  Int?
+  application_status      Int      @default(1) @db.SmallInt
+  application_trash       Int      @default(1) @db.SmallInt
+  
+  // New Specification Fields
+  application_employment         String   @default("Not Employed")
+  application_student_id         String?
+  application_reissue_reason     String?
+  application_fir_uploaded       Boolean  @default(false)
+  application_affidavit_confirm  Boolean  @default(false)
+  application_mproof_option      String?
+  application_noc_confirm        Boolean  @default(false)
+  application_ic_confirm         Boolean  @default(false)
+  application_name_spelling_same Boolean  @default(true)
+  application_name_mismatch_remark String?
+  application_address_same       Boolean  @default(true)
+  application_address_remark     String?
+  application_verify_name        Boolean  @default(false)
+  application_verify_dob         Boolean  @default(false)
+  application_verify_nationality Boolean  @default(false)
+  application_verify_address     Boolean  @default(false)
+  application_verify_originals   Boolean  @default(false)
+  application_risk               String   @default("Low")
+  application_criminal_case      Boolean  @default(false)
+
+  office                  Location @relation(fields: [application_office], references: [location_id], onDelete: Cascade)
+
+  @@map("applications")
+}
