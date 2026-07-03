@@ -78,7 +78,7 @@ export default async function ViewApplicationPage({ params }: PageProps) {
   const getDocName = (idStr: string, otherText: string | null) => {
     if (idStr === "-1") return `Other - ${otherText || ""}`;
     const docId = parseInt(idStr);
-    const d = docs.find((x) => x.document_id === docId);
+    const d = docs.find((x: any) => x.document_id === docId);
     return d ? d.document_name : "-";
   };
 
