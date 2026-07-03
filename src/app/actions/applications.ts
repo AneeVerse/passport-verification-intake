@@ -292,7 +292,7 @@ export async function addApplication(formData: FormData): Promise<{ success?: st
   const singleParentCutoff = new Date(1987, 6, 1).getTime();
   const bothParentsCutoff = new Date(2004, 11, 3).getTime();
 
-  let application_nstatus = null;
+  let application_nstatus: number | null = null;
   let showNationality = application_type === 1;
 
   if (showNationality) {
@@ -549,7 +549,7 @@ export async function updateApplication(id: number, formData: FormData): Promise
   const singleParentCutoff = new Date(1987, 6, 1).getTime();
   const bothParentsCutoff = new Date(2004, 11, 3).getTime();
 
-  let application_nstatus = null;
+  let application_nstatus: number | null = null;
   let showNationality = application_type === 1;
 
   if (showNationality) {

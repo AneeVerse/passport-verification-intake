@@ -82,9 +82,9 @@ export default async function ViewApplicationPage({ params }: PageProps) {
     return d ? d.document_name : "-";
   };
 
-  const aproofNames = app.application_aproof ? app.application_aproof.split(",").map((x) => getDocName(x, app.application_aother)) : [];
-  const dproofNames = app.application_dproof ? app.application_dproof.split(",").map((x) => getDocName(x, app.application_dother)) : [];
-  const addocNames = app.application_addocuments ? app.application_addocuments.split(",").map((x) => getDocName(x, app.application_adother)) : [];
+  const aproofNames = app.application_aproof ? app.application_aproof.split(",").map((x: string) => getDocName(x, app.application_aother)) : [];
+  const dproofNames = app.application_dproof ? app.application_dproof.split(",").map((x: string) => getDocName(x, app.application_dother)) : [];
+  const addocNames = app.application_addocuments ? app.application_addocuments.split(",").map((x: string) => getDocName(x, app.application_adother)) : [];
 
   const statusInfo = STATUS_MAP[app.application_status] || STATUS_MAP[1];
   const riskInfo = RISK_MAP[app.application_risk] || RISK_MAP["Low"];
@@ -431,7 +431,7 @@ export default async function ViewApplicationPage({ params }: PageProps) {
                   Proof of Address
                 </h4>
                 <ul className="space-y-1 pl-4 list-disc text-sm text-slate-300">
-                  {aproofNames.map((n, i) => (
+                  {aproofNames.map((n: string, i: number) => (
                     <li key={i}>{n}</li>
                   ))}
                 </ul>
@@ -442,7 +442,7 @@ export default async function ViewApplicationPage({ params }: PageProps) {
                   Proof of Date of Birth
                 </h4>
                 <ul className="space-y-1 pl-4 list-disc text-sm text-slate-300">
-                  {dproofNames.map((n, i) => (
+                  {dproofNames.map((n: string, i: number) => (
                     <li key={i}>{n}</li>
                   ))}
                 </ul>
@@ -454,7 +454,7 @@ export default async function ViewApplicationPage({ params }: PageProps) {
                     Additional Documents
                   </h4>
                   <ul className="space-y-1 pl-4 list-disc text-sm text-slate-300">
-                    {addocNames.map((n, i) => (
+                    {addocNames.map((n: string, i: number) => (
                       <li key={i}>{n}</li>
                     ))}
                   </ul>
